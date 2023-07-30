@@ -1,4 +1,4 @@
-package com.example.estudandojava;
+package com.enterprisechallegenge.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
