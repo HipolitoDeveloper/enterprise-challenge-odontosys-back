@@ -1,14 +1,13 @@
 package com.enterprisechallegenge.api.services;
 
-import com.enterprisechallegenge.api.entities.Doctor;
-import com.enterprisechallegenge.api.repositories.DoctorRepository;
+import com.enterprisechallegenge.api.entities.Consult;
+import com.enterprisechallegenge.api.repositories.ConsultRepository;
 import com.enterprisechallegenge.api.services.exceptions.DatabaseException;
 import com.enterprisechallegenge.api.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -16,21 +15,21 @@ import java.util.Optional;
 
 
 @Service
-public class DoctorService {
+public class ConsultService {
 
     @Autowired
-    private DoctorRepository repository;
+    private ConsultRepository repository;
 
-    public List<Doctor> findAll() {
+    public List<Consult> findAll() {
         return repository.findAll();
     }
 
-    public Doctor findById(Long id) {
-        Optional<Doctor> obj = repository.findById(id);
+    public Consult findById(Long id) {
+        Optional<Consult> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public Doctor insert(Doctor obj) {
+    public Consult insert(Consult obj) {
         return repository.save(obj);
     }
 
@@ -43,9 +42,9 @@ public class DoctorService {
             throw new DatabaseException(e.getMessage());
         }
     }
-    public Doctor update(Long id, Doctor obj) {
+    public Consult update(Long id, Consult obj) {
         try {
-            Doctor entity = repository.getById(id);
+            Consult entity = repository.getById(id);
             updateData(entity, obj);
 
             return repository.save(entity);
@@ -54,10 +53,12 @@ public class DoctorService {
         }
     }
 
-    private void updateData(Doctor entity, Doctor obj) {
-        entity.setCrm(obj.getCrm());
-        entity.setMatricula(obj.getMatricula());
-        entity.setNome(obj.getNome());
+    private void updateData(Consult entity, Consult obj) {
+      entity.setDoctor(obj.getDoctor());
+        entity.setPatient(obj.getPatient());
+        entity.setProcedure(obj.getProcedure());
+      entity.setDt_hr_consulta(obj.getDt_hr_consulta());
+      entity.setNr_consultorio(obj.getNr_consultorio());
     }
 
 }

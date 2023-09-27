@@ -1,7 +1,7 @@
 package com.enterprisechallegenge.api.resources;
 
-import com.enterprisechallegenge.api.entities.Doctor;
-import com.enterprisechallegenge.api.services.DoctorService;
+import com.enterprisechallegenge.api.entities.Consult;
+import com.enterprisechallegenge.api.services.ConsultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,29 +12,29 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/doctor")
-public class DoctorResource {
+@RequestMapping(value = "/consult")
+public class ConsultResource {
 
     @Autowired
-    private DoctorService service;
+    private ConsultService service;
 
 
     @GetMapping
-    public ResponseEntity<List<Doctor>> findAll() {
-        List<Doctor> list = service.findAll();
+    public ResponseEntity<List<Consult>> findAll() {
+        List<Consult> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Doctor> findById(@PathVariable Long id) {
-        Doctor obj = service.findById(id);
+    public ResponseEntity<Consult> findById(@PathVariable Long id) {
+        Consult obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping
-    public ResponseEntity<Doctor> insert(@RequestBody Doctor obj) {
+    public ResponseEntity<Consult> insert(@RequestBody Consult obj) {
         obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getMatricula()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).body(obj);
     }
 
@@ -45,7 +45,7 @@ public class DoctorResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Doctor> update(@PathVariable Long id, @RequestBody Doctor obj) {
+    public ResponseEntity<Consult> update(@PathVariable Long id, @RequestBody Consult obj) {
         obj = service.update(id, obj);
         return ResponseEntity.ok().body(obj);
     }

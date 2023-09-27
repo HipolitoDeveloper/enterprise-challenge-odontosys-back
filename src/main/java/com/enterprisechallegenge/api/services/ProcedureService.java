@@ -1,14 +1,13 @@
 package com.enterprisechallegenge.api.services;
 
-import com.enterprisechallegenge.api.entities.Doctor;
-import com.enterprisechallegenge.api.repositories.DoctorRepository;
+import com.enterprisechallegenge.api.entities.Procedure;
+import com.enterprisechallegenge.api.repositories.ProcedureRepository;
 import com.enterprisechallegenge.api.services.exceptions.DatabaseException;
 import com.enterprisechallegenge.api.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -16,21 +15,21 @@ import java.util.Optional;
 
 
 @Service
-public class DoctorService {
+public class ProcedureService {
 
     @Autowired
-    private DoctorRepository repository;
+    private ProcedureRepository repository;
 
-    public List<Doctor> findAll() {
+    public List<Procedure> findAll() {
         return repository.findAll();
     }
 
-    public Doctor findById(Long id) {
-        Optional<Doctor> obj = repository.findById(id);
+    public Procedure findById(Long id) {
+        Optional<Procedure> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public Doctor insert(Doctor obj) {
+    public Procedure insert(Procedure obj) {
         return repository.save(obj);
     }
 
@@ -43,9 +42,10 @@ public class DoctorService {
             throw new DatabaseException(e.getMessage());
         }
     }
-    public Doctor update(Long id, Doctor obj) {
+
+    public Procedure update(Long id, Procedure obj) {
         try {
-            Doctor entity = repository.getById(id);
+            Procedure entity = repository.getById(id);
             updateData(entity, obj);
 
             return repository.save(entity);
@@ -54,10 +54,9 @@ public class DoctorService {
         }
     }
 
-    private void updateData(Doctor entity, Doctor obj) {
-        entity.setCrm(obj.getCrm());
-        entity.setMatricula(obj.getMatricula());
-        entity.setNome(obj.getNome());
+    private void updateData(Procedure entity, Procedure obj) {
+        entity.setNm_procedimento(obj.getNm_procedimento());
+
     }
 
 }
